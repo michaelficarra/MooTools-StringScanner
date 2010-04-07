@@ -51,7 +51,7 @@ Checks if a `scan` of the given pattern would succeed without advancing the scan
 ### check_until(pattern)
 *Note: this method alters last match results*
 
-Checks if a `scan_until` would succeed without advancing the scan pointer. Returns the portion of the String being scanned from the scan pointer to the end of the matched string on successful match, null otherwise.
+Checks if a `scan_until` would succeed without advancing the scan pointer. Returns the portion of the String being scanned from the scan pointer to the end of the matched String on successful match, null otherwise.
 
 	ss.reset()					// #<StringScanner 0/13 @ "abc12...">
 	ss.check_until(/\s/)		// "abc123 "
@@ -121,7 +121,7 @@ Checks if given pattern matches anywhere after the current scan pointer. This wi
 ### match
 *Note: Ruby equivalent: `matched`*
 
-Returns the last string matched or null if the last attempted match failed.
+Returns the last String matched or null if the last attempted match failed.
 
 	ss.reset()				// #<StringScanner 0/13 @ "abc12...">
 	ss.scan(/[a-z]+/i)		// "abc"
@@ -132,7 +132,7 @@ Returns the last string matched or null if the last attempted match failed.
 ### matches(pattern)
 *Note: Ruby equivalent: `match?`*
 
-Checks if a scan of the given pattern would succeed without advancing the scan pointer. Returns the length of the string matched on successful match, null otherwise.
+Checks if a scan of the given pattern would succeed without advancing the scan pointer. Returns the length of the String matched on successful match, null otherwise.
 
 	ss.reset()					// #<StringScanner 0/13 @ "abc12...">
 	ss.matches(/[a-z]+/i)		// 3
@@ -155,7 +155,7 @@ Returns true if the last attempted match was successful, false otherwise.
 ### match_size
 *Warning: this method may return 0 on a successful operation. Use `===` comparision to null for failure check, for example: `ss.match_size()===null`*
 
-Returns the length of the most recently matched string if the most recent match attempt succeeded, null otherwise.
+Returns the length of the most recently matched String if the most recent match attempt succeeded, null otherwise.
 
 	ss.reset()			// #<StringScanner 0/13 @ "abc12...">
 	ss.scan(/\w+/)		// "abc123"
@@ -166,7 +166,7 @@ Returns the length of the most recently matched string if the most recent match 
 	ss.matched()		// null
 
 ### peek(len)
-Returns *len* characters after the scan pointer, or the rest of the string, whichever is shorter.
+Returns *len* characters after the scan pointer, or the rest of the String, whichever is shorter.
 
 	ss.reset()			// #<StringScanner 0/13 @ "abc12...">
 	ss.scan(/.*d/)		// "abc123 d"
@@ -186,7 +186,7 @@ Returns the scan pointer position as an integer.
 	ss.pointer()				// 10
 
 ### set_pointer(pos)
-Manually move the scan pointer to *pos* characters from the beginning of the string. The scan pointer is bounded between zero and the scanning string's length. Returns position to which the scan pointer was moved. `set_pointer` does not reset nor modify the last match results.
+Manually move the scan pointer to *pos* characters from the beginning of the String. The scan pointer is bounded between zero and the scanning String's length. Returns position to which the scan pointer was moved. `set_pointer` does not reset nor modify the last match results.
 
 	ss.reset()				// #<StringScanner 0/13 @ "abc12...">
 	ss.set_pointer(4)		// 4
@@ -196,7 +196,7 @@ Manually move the scan pointer to *pos* characters from the beginning of the str
 	ss.set_pointer(99)		// 13
 
 ### reset
-Moves the scan pointer back to the beginning of the string being scanned and clears the last match results.
+Moves the scan pointer back to the beginning of the String being scanned and clears the last match results.
 
 	ss.reset()					// #<StringScanner 0/13 @ "abc12...">
 	ss.scan_until(/(\s)/)		// "abc123 "
@@ -218,7 +218,7 @@ Returns the portion of the String being scanned after the scan pointer.
 ### scan(pattern)
 *Note: this method alters last match results*
 
-Attempts to match the given pattern at the position of the scan pointer. Returns the matched string and advances the string pointer upon successful match. A failed match will result in a null value being returned.
+Attempts to match the given pattern at the position of the scan pointer. Returns the matched String and advances the String pointer upon successful match. A failed match will result in a null value being returned.
 
 	ss.reset()				// #<StringScanner 0/13 @ "abc12...">
 	ss.scan(/[a-z]+/)		// "abc"
@@ -231,7 +231,7 @@ Attempts to match the given pattern at the position of the scan pointer. Returns
 ### scan_until(pattern)
 *Note: this method alters last match results*
 
-Attempts to match the pattern against the String being scanned. On a successful match, the scan pointer is advanced to the end of the matched portion of the String and the portion of the String being scanned up to and including the matched string is returned. On a failed match, null is returned.
+Attempts to match the pattern against the String being scanned. On a successful match, the scan pointer is advanced to the end of the matched portion of the String and the portion of the String being scanned up to and including the matched String is returned. On a failed match, null is returned.
 
 	ss.reset()				// #<StringScanner 0/13 @ "abc12...">
 	ss.scan_until(/ /)		// "abc123 "
@@ -241,7 +241,7 @@ Attempts to match the pattern against the String being scanned. On a successful 
 ### skip(pattern)
 *Note: this method alters last match results*
 
-Performs a `scan`, returning the length of the matched string on successful match, null otherwise.
+Performs a `scan`, returning the length of the matched String on successful match, null otherwise.
 
 	ss.reset()				// #<StringScanner 0/13 @ "abc12...">
 	ss.skip(/[a-z]+/)		// 3
@@ -251,7 +251,7 @@ Performs a `scan`, returning the length of the matched string on successful matc
 ### skip_until(pattern)
 *Note: this method alters last match results*
 
-Performs a `scan_until`, returning the length of the matched string on successful match, null otherwise.
+Performs a `scan_until`, returning the length of the matched String on successful match, null otherwise.
 
 	ss.reset()				// #<StringScanner 0/13 @ "abc12...">
 	ss.skip_until(/ /)		// 7
