@@ -1,7 +1,7 @@
 name: StringScanner
 author: michael
 category: Native
-tags: [ruby, StringScanner, string, scanner, lexer, lexical, analysis, token, tokenize]
+tags: [ruby, StringScanner, string, scanner, lex, lexer, lexical, analysis, token, tokenize]
 current: '0.1'
 docs: 'http://github.com/michaelficarra/MooTools-StringScanner'
 #demo: http://url.to.demo
