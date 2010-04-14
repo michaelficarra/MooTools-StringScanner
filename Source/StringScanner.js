@@ -1,28 +1,22 @@
 /*
 ---
 description: Performs lexical scanning operations on a String
-
 license: LGPL
-
 authors:
 - Michael Ficarra
-
 requires:
 - core/1.2.4:Core
 - core/1.2.4:Array
 - core/1.2.4:Hash
 - core/1.2.4:Class
-# - core/1.2.4:Class.Extras
-
 provides: [StringScanner]
-
 ...
 */
 var StringScanner = new Class({
 	initialize: function(str){
 		this.str = $defined(str) ? str.toString() : '';
 		this.pos = 0;
-		this.last_match = {
+		this.lastMatch = {
 			reset: function(){
 				this.str = null;
 				this.captures = [];
@@ -35,33 +29,33 @@ var StringScanner = new Class({
 		return this.pos<=0 || this.str[this.pos-1]=="\n";
 	},
 	captures: function(){
-		return this.last_match.captures;
+		return this.lastMatch.captures;
 	},
 	check: function(pattern){
 		if(this.str.substr(this.pos).search(pattern)!==0){
-			this.last_match.reset();
+			this.lastMatch.reset();
 			return null;
 		}
 		var matches = this.str.substr(this.pos).match(pattern);
-		this.last_match.str = matches[0];
-		this.last_match.captures = matches.slice(1);
-		return this.last_match.str;
+		this.lastMatch.str = matches[0];
+		this.lastMatch.captures = matches.slice(1);
+		return this.lastMatch.str;
 	},
-	check_until: function(pattern){
-		var pattern_pos = this.str.substr(this.pos).search(pattern);
-		if(pattern_pos < 0){
-			this.last_match.reset();
+	checkUntil: function(pattern){
+		var patternPos = this.str.substr(this.pos).search(pattern);
+		if(patternPos < 0){
+			this.lastMatch.reset();
 			return null;
 		}
-		var matches = this.str.substr(this.pos+pattern_pos).match(pattern);
-		this.last_match.str = this.str.substr(this.pos,pattern_pos)+matches[0];
-		this.last_match.captures = matches.slice(1);
-		return this.last_match.str;
+		var matches = this.str.substr(this.pos+patternPos).match(pattern);
+		this.lastMatch.str = this.str.substr(this.pos,patternPos)+matches[0];
+		this.lastMatch.captures = matches.slice(1);
+		return this.lastMatch.str;
 	},
 	clone: function(){
 		var clone = new this.constructor(this.str);
 		clone.pos = this.pos;
-		clone.last_match = this.last_match;
+		clone.lastMatch = this.lastMatch;
 		return clone;
 	},
 	concat: function(str){
@@ -72,33 +66,33 @@ var StringScanner = new Class({
 		return this.pos==this.str.length;
 	},
 	exists: function(pattern){
-		var pattern_pos = this.str.substr(this.pos).search(pattern);
-		if(pattern_pos < 0){
-			this.last_match.reset();
+		var patternPos = this.str.substr(this.pos).search(pattern);
+		if(patternPos < 0){
+			this.lastMatch.reset();
 			return null;
 		}
-		var matches = this.str.substr(this.pos+pattern_pos).match(pattern);
-		this.last_match.str = matches[0];
-		this.last_match.captures = matches.slice(1);
-		return pattern_pos;
+		var matches = this.str.substr(this.pos+patternPos).match(pattern);
+		this.lastMatch.str = matches[0];
+		this.lastMatch.captures = matches.slice(1);
+		return patternPos;
 	},
 	getch: function(){
 		return this.scan(/./);
 	},
 	// ruby equivalent: matched
 	match: function(){
-		return this.last_match.str;
+		return this.lastMatch.str;
 	},
 	// ruby equivalent: match?
 	matches: function(pattern){
 		this.check(pattern);
-		return this.match_size();
+		return this.matchSize();
 	},
 	// ruby equivalent: matched?
 	matched: function(){
-		return this.last_match.str !== null;
+		return this.lastMatch.str !== null;
 	},
-	match_size: function(){
+	matchSize: function(){
 		return this.matched() ? this.match().length : null;
 	},
 	peek: function(len){
@@ -107,12 +101,12 @@ var StringScanner = new Class({
 	pointer: function(){
 		return this.pos;
 	},
-	set_pointer: function(pos){
+	setPointer: function(pos){
 		this.pos = [[0,pos].max(),this.str.length].min();
 		return this.pos;
 	},
 	reset: function(){
-		this.last_match.reset();
+		this.lastMatch.reset();
 		this.pos = 0;
 		return this;
 	},
@@ -124,25 +118,25 @@ var StringScanner = new Class({
 		if(chk !== null) this.pos += chk.length;
 		return chk;
 	},
-	scan_until: function(pattern){
-		var chk = this.check_until(pattern);
+	scanUntil: function(pattern){
+		var chk = this.checkUntil(pattern);
 		if(chk !== null) this.pos += chk.length;
 		return chk;
 	},
 	skip: function(pattern){
 		this.scan(pattern);
-		return this.match_size();
+		return this.matchSize();
 	},
-	skip_until: function(pattern){
-		this.scan_until(pattern);
-		return this.match_size();
+	skipUntil: function(pattern){
+		this.scanUntil(pattern);
+		return this.matchSize();
 	},
 	string: function(){
 		return this.str;
 	},
 	terminate: function(){
 		this.pos = this.str.length;
-		this.last_match.reset();
+		this.lastMatch.reset();
 		return this;
 	}
 });
@@ -160,14 +154,13 @@ StringScanner.prototype.toString = function(){
 };
 
 StringScanner.alias({
-	'bol': 'beginning_of_line',
-	'eos': 'end_of_string',
+	'bol': 'beginningOfLine',
+	'eos': 'endOfString',
 	'clone': 'dup',
 	'exists': 'exist',
-	'getch': 'get_char',
+	'getch': 'getChar',
 	'pointer': 'position',
-	'terminate': 'clear',
-	'toString': 'to_s'
+	'terminate': 'clear'
 });
 
 /* Copyright 2010 Michael Ficarra
