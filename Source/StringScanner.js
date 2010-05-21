@@ -14,7 +14,7 @@ provides: [StringScanner]
 */
 var StringScanner = new Class({
 	initialize: function(str){
-		this.str = $defined(str) ? str.toString() : '';
+		this.str = str ? str.toString() : '';
 		this.pos = 0;
 		this.lastMatch = {
 			reset: function(){
@@ -102,7 +102,7 @@ var StringScanner = new Class({
 		return this.pos;
 	},
 	setPointer: function(pos){
-		this.pos = [[0,pos].max(),this.str.length].min();
+		this.pos = pos.limit(0,this.str.length);
 		return this.pos;
 	},
 	reset: function(){
